@@ -105,6 +105,9 @@ Used to configure tracing across all components.
 {{- with $endpoint := $otlp.endpoint }}
 - --otlp-endpoint={{ $endpoint }}
 {{- end }}
+{{- with $ratio := $otlp.traceSamplingRatio }}
+- --trace-sampling-ratio={{ $ratio }}
+{{- end }}
 {{- end }}
 {{- end }}
 
