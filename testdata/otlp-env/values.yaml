@@ -1,0 +1,5 @@
+global:
+  otlp:
+    resourceAttributes:
+      deployment.environment: dev
+      service.version: test

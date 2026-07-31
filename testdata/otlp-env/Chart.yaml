@@ -1,0 +1,10 @@
+apiVersion: v2
+name: otlp-env-fixture
+description: Test fixture for rendering common OTLP environment helpers.
+type: application
+version: 0.0.0
+
+dependencies:
+- name: unikorn-common
+  version: 0.1.18
+  repository: file://../../charts/unikorn-common
