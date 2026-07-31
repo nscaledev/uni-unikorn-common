@@ -116,7 +116,7 @@ OTLP environment variables.
 Used to configure OpenTelemetry SDK resource attributes.
 */}}
 {{- define "unikorn.otlp.resourceAttribute.escape" -}}
-{{- . | toString | replace "%" "%25" | replace "," "%2C" | replace "=" "%3D" -}}
+{{- . | toString | urlquery -}}
 {{- end }}
 
 {{- define "unikorn.otlp.env" -}}

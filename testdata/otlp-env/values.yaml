@@ -3,4 +3,4 @@ global:
     resourceAttributes:
       deployment.environment: test
       example.value: east,blue=primary%zone
-      service.version: test
+      service.version: 1.2.3+build.5
