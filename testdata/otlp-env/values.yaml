@@ -1,5 +1,6 @@
 global:
   otlp:
     resourceAttributes:
-      deployment.environment: dev
+      deployment.environment: test
+      example.value: east,blue=primary%zone
       service.version: test

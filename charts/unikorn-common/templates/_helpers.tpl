@@ -115,6 +115,10 @@ Used to configure tracing across all components.
 OTLP environment variables.
 Used to configure OpenTelemetry SDK resource attributes.
 */}}
+{{- define "unikorn.otlp.resourceAttribute.escape" -}}
+{{- . | toString | replace "%" "%25" | replace "," "%2C" | replace "=" "%3D" -}}
+{{- end }}
+
 {{- define "unikorn.otlp.env" -}}
 {{- $otlp := .Values.otlp -}}
 {{- if ( and .Values.global .Values.global.otlp ) -}}
@@ -124,7 +128,9 @@ Used to configure OpenTelemetry SDK resource attributes.
 {{- with $attributes := $otlp.resourceAttributes }}
 {{- $pairs := list -}}
 {{- range $key := keys $attributes | sortAlpha -}}
-{{- $pairs = append $pairs (printf "%s=%v" $key (index $attributes $key)) -}}
+{{- $encodedKey := include "unikorn.otlp.resourceAttribute.escape" $key -}}
+{{- $encodedValue := include "unikorn.otlp.resourceAttribute.escape" (index $attributes $key) -}}
+{{- $pairs = append $pairs (printf "%s=%s" $encodedKey $encodedValue) -}}
 {{- end }}
 - name: OTEL_RESOURCE_ATTRIBUTES
   value: {{ join "," $pairs | quote }}

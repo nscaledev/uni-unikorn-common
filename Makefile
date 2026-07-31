@@ -7,4 +7,4 @@ test:
 	perl -0pi -e 's#file://../../charts/unikorn-common#file://$(CURDIR)/charts/unikorn-common#' $$tmp/otlp-env/Chart.yaml; \
 	helm dependency update $$tmp/otlp-env; \
 	helm template $$tmp/otlp-env | grep -q 'name: OTEL_RESOURCE_ATTRIBUTES'; \
-	helm template $$tmp/otlp-env | grep -q 'deployment.environment=dev,service.version=test'
+	helm template $$tmp/otlp-env | grep -q 'deployment.environment=test,example.value=east%2Cblue%3Dprimary%25zone,service.version=test'
