@@ -112,6 +112,33 @@ Used to configure tracing across all components.
 {{- end }}
 
 {{/*
+OTLP environment variables.
+Used to configure OpenTelemetry SDK resource attributes.
+*/}}
+{{- define "unikorn.otlp.resourceAttribute.escape" -}}
+{{- . | toString | urlquery -}}
+{{- end }}
+
+{{- define "unikorn.otlp.env" -}}
+{{- $otlp := .Values.otlp -}}
+{{- if ( and .Values.global .Values.global.otlp ) -}}
+{{- $otlp = .Values.global.otlp -}}
+{{- end -}}
+{{- if $otlp -}}
+{{- with $attributes := $otlp.resourceAttributes }}
+{{- $pairs := list -}}
+{{- range $key := keys $attributes | sortAlpha -}}
+{{- $encodedKey := include "unikorn.otlp.resourceAttribute.escape" $key -}}
+{{- $encodedValue := include "unikorn.otlp.resourceAttribute.escape" (index $attributes $key) -}}
+{{- $pairs = append $pairs (printf "%s=%s" $encodedKey $encodedValue) -}}
+{{- end }}
+- name: OTEL_RESOURCE_ATTRIBUTES
+  value: {{ join "," $pairs | quote }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
 CORS support.
 Used to lock down APIs to specific clients.
 */}}

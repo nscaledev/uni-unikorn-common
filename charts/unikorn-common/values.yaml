@@ -1,1 +1,4 @@
-# Intentionally empty.
+# global:
+#   otlp:
+#     resourceAttributes:
+#       deployment.environment: dev
